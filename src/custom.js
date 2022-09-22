@@ -1,6 +1,6 @@
 const config = {
-    "site-name": "My Simpublish",
-    "site-slogan": "A Simpublish site"
+    "site-name": "Simpread",
+    "site-slogan": "A Simpread site"
 }
 
 export default config;
