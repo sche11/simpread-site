@@ -1,0 +1,156 @@
+> 本文由 [简悦 SimpRead](http://ksria.com/simpread/) 转码， 原文地址 [www.ithome.com](https://www.ithome.com/0/318/639.htm)
+
+> 要对应用程序进行调试，记录日志是最常见快捷的方式。日志可以清楚地展现出应用的运行状态。从而给程序员提供修正和改进的建议
+
+感谢 IT 之家网友 **東京特許許可局局長** 的原创投稿
+
+注：测试设备 Android 版本为 7.1。  
+
+**一、日志的概况，Android 自带终端的使用和初次使用 logcat**
+
+要对应用程序进行调试，记录日志是最常见快捷的方式。日志可以清楚地展现出应用的运行状态。从而给程序员提供修正和改进的建议。
+
+![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAACbklEQVRoQ+2aMU4dMRCGZw6RC1CSSyQdLZJtKQ2REgoiRIpQkCYClCYpkgIESQFIpIlkW+IIcIC0gUNwiEFGz+hlmbG9b1nesvGW++zxfP7H4/H6IYzkwZFwQAUZmpJVkSeniFJKA8ASIi7MyfkrRPxjrT1JjZ8MLaXUDiJuzwngn2GJaNd7vyP5IoIYY94Q0fEQIKIPRGS8947zSQTRWh8CwLuBgZx479+2BTkHgBdDAgGAC+fcywoyIFWqInWN9BSONbTmFVp/AeA5o+rjKRJ2XwBYRsRXM4ZXgAg2LAPzOCDTJYQx5pSIVlrC3EI45y611osMTHuQUPUiYpiVooerg7TWRwDAlhSM0TuI+BsD0x4kGCuFSRVzSqkfiLiWmY17EALMbCAlMCmI6IwxZo+INgQYEYKBuW5da00PKikjhNNiiPGm01rrbwDwofGehQjjNcv1SZgddALhlJEgwgJFxDNr7acmjFLqCyJuTd6LEGFttpmkYC91Hrk3s1GZFERMmUT01Xv/sQljjPlMRMsxO6WULwnb2D8FEs4j680wScjO5f3vzrlNJszESWq2LYXJgTzjZm56MCHf3zVBxH1r7ftU1splxxKYHEgoUUpTo+grEf303rPH5hxENJqDKQEJtko2q9zGeeycWy3JhpKhWT8+NM/sufIhBwKI+Mta+7pkfxKMtd8Qtdbcx4dUQZcFCQ2I6DcAnLUpf6YMPxhIDDOuxC4C6djoQUE6+tKpewWZ1wlRkq0qUhXptKTlzv93aI3jWmE0Fz2TeujpX73F9TaKy9CeMk8vZusfBnqZ1g5GqyIdJq+XrqNR5AahKr9CCcxGSwAAAABJRU5ErkJggg==)
+
+（Windows 事件管理器中的 Windows 系统日志）
+
+和 Windows 一样，在 Android 系统中也提供了类似的日志记录机制。只不过与 Windows 不同，在 Android 中并没有明显的可以查看日志的入口。其实 Android 中已经内置了查看日志的工具，只不过我们需要比较特殊的手段召唤它出来。
+
+（打开开发者选项，打开本地终端的开关）
+
+![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAACbklEQVRoQ+2aMU4dMRCGZw6RC1CSSyQdLZJtKQ2REgoiRIpQkCYClCYpkgIESQFIpIlkW+IIcIC0gUNwiEFGz+hlmbG9b1nesvGW++zxfP7H4/H6IYzkwZFwQAUZmpJVkSeniFJKA8ASIi7MyfkrRPxjrT1JjZ8MLaXUDiJuzwngn2GJaNd7vyP5IoIYY94Q0fEQIKIPRGS8947zSQTRWh8CwLuBgZx479+2BTkHgBdDAgGAC+fcywoyIFWqInWN9BSONbTmFVp/AeA5o+rjKRJ2XwBYRsRXM4ZXgAg2LAPzOCDTJYQx5pSIVlrC3EI45y611osMTHuQUPUiYpiVooerg7TWRwDAlhSM0TuI+BsD0x4kGCuFSRVzSqkfiLiWmY17EALMbCAlMCmI6IwxZo+INgQYEYKBuW5da00PKikjhNNiiPGm01rrbwDwofGehQjjNcv1SZgddALhlJEgwgJFxDNr7acmjFLqCyJuTd6LEGFttpmkYC91Hrk3s1GZFERMmUT01Xv/sQljjPlMRMsxO6WULwnb2D8FEs4j680wScjO5f3vzrlNJszESWq2LYXJgTzjZm56MCHf3zVBxH1r7ftU1splxxKYHEgoUUpTo+grEf303rPH5hxENJqDKQEJtko2q9zGeeycWy3JhpKhWT8+NM/sufIhBwKI+Mta+7pkfxKMtd8Qtdbcx4dUQZcFCQ2I6DcAnLUpf6YMPxhIDDOuxC4C6djoQUE6+tKpewWZ1wlRkq0qUhXptKTlzv93aI3jWmE0Fz2TeujpX73F9TaKy9CeMk8vZusfBnqZ1g5GqyIdJq+XrqNR5AahKr9CCcxGSwAAAABJRU5ErkJggg==)
+
+（打开启动器界面中新增的 “终端” 图标）
+
+![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAACbklEQVRoQ+2aMU4dMRCGZw6RC1CSSyQdLZJtKQ2REgoiRIpQkCYClCYpkgIESQFIpIlkW+IIcIC0gUNwiEFGz+hlmbG9b1nesvGW++zxfP7H4/H6IYzkwZFwQAUZmpJVkSeniFJKA8ASIi7MyfkrRPxjrT1JjZ8MLaXUDiJuzwngn2GJaNd7vyP5IoIYY94Q0fEQIKIPRGS8947zSQTRWh8CwLuBgZx479+2BTkHgBdDAgGAC+fcywoyIFWqInWN9BSONbTmFVp/AeA5o+rjKRJ2XwBYRsRXM4ZXgAg2LAPzOCDTJYQx5pSIVlrC3EI45y611osMTHuQUPUiYpiVooerg7TWRwDAlhSM0TuI+BsD0x4kGCuFSRVzSqkfiLiWmY17EALMbCAlMCmI6IwxZo+INgQYEYKBuW5da00PKikjhNNiiPGm01rrbwDwofGehQjjNcv1SZgddALhlJEgwgJFxDNr7acmjFLqCyJuTd6LEGFttpmkYC91Hrk3s1GZFERMmUT01Xv/sQljjPlMRMsxO6WULwnb2D8FEs4j680wScjO5f3vzrlNJszESWq2LYXJgTzjZm56MCHf3zVBxH1r7ftU1splxxKYHEgoUUpTo+grEf303rPH5hxENJqDKQEJtko2q9zGeeycWy3JhpKhWT8+NM/sufIhBwKI+Mta+7pkfxKMtd8Qtdbcx4dUQZcFCQ2I6DcAnLUpf6YMPxhIDDOuxC4C6djoQUE6+tKpewWZ1wlRkq0qUhXptKTlzv93aI3jWmE0Fz2TeujpX73F9TaKy9CeMk8vZusfBnqZ1g5GqyIdJq+XrqNR5AahKr9CCcxGSwAAAABJRU5ErkJggg==)
+
+当然，除了以上方法。对于其他基于 Android 深度优化的 ROM，本选项被阉割时，可以下载第三方终端模拟器类应用。
+
+（[这是一个第三方 Terminal 应用](https://www.coolapk.com/apk/com.romide.terminal)）
+
+（在黑色界面中输入 logcat，回车执行）
+
+![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAACbklEQVRoQ+2aMU4dMRCGZw6RC1CSSyQdLZJtKQ2REgoiRIpQkCYClCYpkgIESQFIpIlkW+IIcIC0gUNwiEFGz+hlmbG9b1nesvGW++zxfP7H4/H6IYzkwZFwQAUZmpJVkSeniFJKA8ASIi7MyfkrRPxjrT1JjZ8MLaXUDiJuzwngn2GJaNd7vyP5IoIYY94Q0fEQIKIPRGS8947zSQTRWh8CwLuBgZx479+2BTkHgBdDAgGAC+fcywoyIFWqInWN9BSONbTmFVp/AeA5o+rjKRJ2XwBYRsRXM4ZXgAg2LAPzOCDTJYQx5pSIVlrC3EI45y611osMTHuQUPUiYpiVooerg7TWRwDAlhSM0TuI+BsD0x4kGCuFSRVzSqkfiLiWmY17EALMbCAlMCmI6IwxZo+INgQYEYKBuW5da00PKikjhNNiiPGm01rrbwDwofGehQjjNcv1SZgddALhlJEgwgJFxDNr7acmjFLqCyJuTd6LEGFttpmkYC91Hrk3s1GZFERMmUT01Xv/sQljjPlMRMsxO6WULwnb2D8FEs4j680wScjO5f3vzrlNJszESWq2LYXJgTzjZm56MCHf3zVBxH1r7ftU1splxxKYHEgoUUpTo+grEf303rPH5hxENJqDKQEJtko2q9zGeeycWy3JhpKhWT8+NM/sufIhBwKI+Mta+7pkfxKMtd8Qtdbcx4dUQZcFCQ2I6DcAnLUpf6YMPxhIDDOuxC4C6djoQUE6+tKpewWZ1wlRkq0qUhXptKTlzv93aI3jWmE0Fz2TeujpX73F9TaKy9CeMk8vZusfBnqZ1g5GqyIdJq+XrqNR5AahKr9CCcxGSwAAAABJRU5ErkJggg==)
+
+1. logcat  
+
+**二、logcat 概况、日志格式、logcat 详细用法、还有 MatLog**
+
+logcat 是 Android 中用来查看日志的命令行工具（Log Catcher），由图可知，logcat 以
+
+1. --------- beginning of xxx 
+
+为起点，开始捕捉 Android 日志。xxx 对应这存储着 Android 日志记录器的环形缓冲区。Android 系统在运行时会时刻在几个设备文件中的一个中写入字符串。而这几个设备文件指向几个环形缓冲区。这是 Android 日志的记录原理。而这几个缓冲区合称日志记录器缓冲区。
+
+（打开开发者选项，可以看到有个选项叫做 “日志记录器缓冲区大小”，默认是 256K。由上文所述，日志是循环写入环形缓冲区的。在通常情况下，写满时最旧的日志会被删除以给新输出的日志留内存空间。设置的越大就可以保存离当前时间越久远的日志。但相对地，设置的越大对内存的占用也越大，内存的可用空间也越少，请酌情修改）
+
+![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAACbklEQVRoQ+2aMU4dMRCGZw6RC1CSSyQdLZJtKQ2REgoiRIpQkCYClCYpkgIESQFIpIlkW+IIcIC0gUNwiEFGz+hlmbG9b1nesvGW++zxfP7H4/H6IYzkwZFwQAUZmpJVkSeniFJKA8ASIi7MyfkrRPxjrT1JjZ8MLaXUDiJuzwngn2GJaNd7vyP5IoIYY94Q0fEQIKIPRGS8947zSQTRWh8CwLuBgZx479+2BTkHgBdDAgGAC+fcywoyIFWqInWN9BSONbTmFVp/AeA5o+rjKRJ2XwBYRsRXM4ZXgAg2LAPzOCDTJYQx5pSIVlrC3EI45y611osMTHuQUPUiYpiVooerg7TWRwDAlhSM0TuI+BsD0x4kGCuFSRVzSqkfiLiWmY17EALMbCAlMCmI6IwxZo+INgQYEYKBuW5da00PKikjhNNiiPGm01rrbwDwofGehQjjNcv1SZgddALhlJEgwgJFxDNr7acmjFLqCyJuTd6LEGFttpmkYC91Hrk3s1GZFERMmUT01Xv/sQljjPlMRMsxO6WULwnb2D8FEs4j680wScjO5f3vzrlNJszESWq2LYXJgTzjZm56MCHf3zVBxH1r7ftU1splxxKYHEgoUUpTo+grEf303rPH5hxENJqDKQEJtko2q9zGeeycWy3JhpKhWT8+NM/sufIhBwKI+Mta+7pkfxKMtd8Qtdbcx4dUQZcFCQ2I6DcAnLUpf6YMPxhIDDOuxC4C6djoQUE6+tKpewWZ1wlRkq0qUhXptKTlzv93aI3jWmE0Fz2TeujpX73F9TaKy9CeMk8vZusfBnqZ1g5GqyIdJq+XrqNR5AahKr9CCcxGSwAAAABJRU5ErkJggg==)
+
+默认输出的日志格式如下文所示：（不带任何参数的 logcat 命令）
+
+1. 07-22 20:31:21.565   993  1032 W BroadcastQueue: Background execution not allowed: receiving Intent {act=com.tencent.mm.plugin.openapi.Intent.ACTION_HANDLE_APP_REGISTER flg=0x10 (has extras) } to com.tencent.mm/.plugin.base.stub.WXEntryActivity$EntryReceiver  
+
+由六部分组成：
+
+1. 写下日志时的时间，如上中 07-22 20:31:21.565。
+
+2. PID（进程 ID），如上中 993。
+
+3. TID（线程 ID），如上中 1032。
+
+4. 优先级，在 Android 中，日志的优先级从低到高分以下几种：
+
+*   V—Verbose（啰嗦，最低级别，开发调试中的一些详细信息，仅在开发中使用，不可在发布产品中输出，不是很常见，包含诸如方法名，变量值之类的信息）
+    
+*   D—Debug（调试，用于调试的信息，可以在发布产品中关闭，比较常见，开发中经常选择输出此种级别的日志，有时在 beta 版应用中出现）
+    
+*   I—Info（信息，该等级日志显示运行状态信息，可在产品出现问题时提供帮助，从该级别开始的日志通常包含完整意义的英语语句和调试信息，是最常见的日志级别）
+    
+*   W—Warning（警告，运行出现异常即将发生错误或表明已发生非致命性错误，该级别日志通常显示出执行过程中的意外情况，例如将 try-catch 语句块中的异常打印堆栈轨迹之后可输出此种级别日志）
+    
+*   E—Error（错误，已经出现可影响运行的错误，比如应用 crash 时输出的日志）
+    
+*   F—Fatal（严重错误，比 error 级别更高，目前我只在 android 系统内核发出的日志中看到此种级别。在 Android6.0 以前表明开发者认为绝对不应该出现的错误，在此以后一般开发场景下绝不应该输出此种级别的日志）
+    
+*   S—Silent（寂静，最高级别，没有一条日志会属于这个级别，仅仅作为关闭 logcat 输出的过滤器参数）
+    
+
+示例中日志等级显示为 W，表示警告级别。
+
+5. 标签，标明日志发起者和方便日志的过滤筛选，如上中 BroadcastQueue，表示该日志关于广播队列。
+
+6. 正文，本日志的主体内容。示例日志中表示一个后台执行被阻止，并显示出了接收到的意图的详细信息。
+
+在之前的操作中，日志只是输出了几段就暂停了输出。其实在非 root 的系统权限下，logcat 只能够输出当前应用动作引起的日志（这里是指终端应用）。如果想获取全局日志，必须在 root 权限下获取，所以。。。
+
+1. kenzo:/ $ su  
+
+2. kenzo:/ # logcat  
+
+输入 su 回车之后再输入 logcat 回车，输出的全局日志看起来像流水一样，只不过由于新日志的不断输出，方向是向上流的。
+
+logcat 的使用姿势很丰富。用法如下：
+
+logcat [选项] [过滤器]?
+
+选项：
+
+-s <过滤器> 设置过滤器，后加过滤器，多个过滤器用逗号分隔。若其后不加过滤器。等效于 "-s *:S"，不输出日志。
+
+除了方便查看日志的 MatLog 之外，这里再介绍一个应用叫 LiveBoot。这个应用可以将开机时正式进入系统前，还在播放开机动画时，就将日志显示在屏幕上。这个功能最大的好处就是当系统长期播放开机动画时，通过显示出的日志可以判断系统是在建立虚拟机缓存（比如在 Recovery 中清除 Cache 和 Dalvik/ART Cache 了之后的重启）还是变成了 bootloop 软砖。（永久开机动画循环）
+
+（应用界面，可以看到这个应用的作者是大名鼎鼎的谁）
+
+![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAACbklEQVRoQ+2aMU4dMRCGZw6RC1CSSyQdLZJtKQ2REgoiRIpQkCYClCYpkgIESQFIpIlkW+IIcIC0gUNwiEFGz+hlmbG9b1nesvGW++zxfP7H4/H6IYzkwZFwQAUZmpJVkSeniFJKA8ASIi7MyfkrRPxjrT1JjZ8MLaXUDiJuzwngn2GJaNd7vyP5IoIYY94Q0fEQIKIPRGS8947zSQTRWh8CwLuBgZx479+2BTkHgBdDAgGAC+fcywoyIFWqInWN9BSONbTmFVp/AeA5o+rjKRJ2XwBYRsRXM4ZXgAg2LAPzOCDTJYQx5pSIVlrC3EI45y611osMTHuQUPUiYpiVooerg7TWRwDAlhSM0TuI+BsD0x4kGCuFSRVzSqkfiLiWmY17EALMbCAlMCmI6IwxZo+INgQYEYKBuW5da00PKikjhNNiiPGm01rrbwDwofGehQjjNcv1SZgddALhlJEgwgJFxDNr7acmjFLqCyJuTd6LEGFttpmkYC91Hrk3s1GZFERMmUT01Xv/sQljjPlMRMsxO6WULwnb2D8FEs4j680wScjO5f3vzrlNJszESWq2LYXJgTzjZm56MCHf3zVBxH1r7ftU1splxxKYHEgoUUpTo+grEf303rPH5hxENJqDKQEJtko2q9zGeeycWy3JhpKhWT8+NM/sufIhBwKI+Mta+7pkfxKMtd8Qtdbcx4dUQZcFCQ2I6DcAnLUpf6YMPxhIDDOuxC4C6djoQUE6+tKpewWZ1wlRkq0qUhXptKTlzv93aI3jWmE0Fz2TeujpX73F9TaKy9CeMk8vZusfBnqZ1g5GqyIdJq+XrqNR5AahKr9CCcxGSwAAAABJRU5ErkJggg==)
+
+（开机效果，看起来很装逼不是吗）
+
+![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAACbklEQVRoQ+2aMU4dMRCGZw6RC1CSSyQdLZJtKQ2REgoiRIpQkCYClCYpkgIESQFIpIlkW+IIcIC0gUNwiEFGz+hlmbG9b1nesvGW++zxfP7H4/H6IYzkwZFwQAUZmpJVkSeniFJKA8ASIi7MyfkrRPxjrT1JjZ8MLaXUDiJuzwngn2GJaNd7vyP5IoIYY94Q0fEQIKIPRGS8947zSQTRWh8CwLuBgZx479+2BTkHgBdDAgGAC+fcywoyIFWqInWN9BSONbTmFVp/AeA5o+rjKRJ2XwBYRsRXM4ZXgAg2LAPzOCDTJYQx5pSIVlrC3EI45y611osMTHuQUPUiYpiVooerg7TWRwDAlhSM0TuI+BsD0x4kGCuFSRVzSqkfiLiWmY17EALMbCAlMCmI6IwxZo+INgQYEYKBuW5da00PKikjhNNiiPGm01rrbwDwofGehQjjNcv1SZgddALhlJEgwgJFxDNr7acmjFLqCyJuTd6LEGFttpmkYC91Hrk3s1GZFERMmUT01Xv/sQljjPlMRMsxO6WULwnb2D8FEs4j680wScjO5f3vzrlNJszESWq2LYXJgTzjZm56MCHf3zVBxH1r7ftU1splxxKYHEgoUUpTo+grEf303rPH5hxENJqDKQEJtko2q9zGeeycWy3JhpKhWT8+NM/sufIhBwKI+Mta+7pkfxKMtd8Qtdbcx4dUQZcFCQ2I6DcAnLUpf6YMPxhIDDOuxC4C6djoQUE6+tKpewWZ1wlRkq0qUhXptKTlzv93aI3jWmE0Fz2TeujpX73F9TaKy9CeMk8vZusfBnqZ1g5GqyIdJq+XrqNR5AahKr9CCcxGSwAAAABJRU5ErkJggg==)
+
+这个工具需要 root 权限支持。而且并不是都支持所有非类原生 ROM，还会稍微拖慢开机时间。不过想到在疑似系统故障的时候不知道系统到底是好是坏的忐忑心情，这点小瑕疵算得了什么？
+
+**四、免 root 获取全局日志，Flyme6 获取真正全局日志的方法**
+
+之前就说过，要想获取全局日志，必须要在 root 权限下执行 logcat 才能达到目的。这样做的目的是为了保护用户隐私信息。（大家如果闲着没事的话，打开 MatLog，如果懂点英语的话看看正在输出的日志会透露出多少用户隐私。或者正常使用设备一段时间后再用 logcat 导出日志到文件查看，这样显示出的用户隐私更多）不过，Google 并没有完全禁止免 root 查看日志。Android 中有一个权限叫 "android.permission.READ_LOGS"。从字面意思上看就是读取日志时使用的权限。这个权限默认不授予给第三方应用，如果想要将这个权限授予给第三方应用。可以使用在电脑上安装 ADB 和相关驱动。在 Android 设备上打开 USB 调试权限。（adb 大家都很熟悉吧）。然后输入以下命令。
+
+1. adb shell pm grant < 要授权的应用包名 > android.permission.READ_LOGS  
+
+正常的情况下。执行完即退出，不会输出任何字符。第三方应用在授权之后重新启动，通过使用 shell 召唤 logcat，即使在非 root 权限下也能获取日志。如果出现以下错误：
+
+1. Operation not allowed: java.lang.SecurityException: Package < 应用包名 > has not requested permission android.permission.READ_LOGS  
+
+则表明应用的清单文件（AndroidManifest.xml）中需要添加以下权限：
+
+1. **<uses-permission** android: **/>**  
+
+而且目标 SDK（targetSdkVersion）必须不小于 21。
+
+在 MIUI 上，可能还会出现这个错误。
+
+1. Operation not allowed: java.lang.SecurityException: grantRuntimePermission: Neither user 2000 nor current process has android.permission.GRANT_RUNTIME_PERMISSIONS.  
+
+其实 MIUI 默认不允许 adb 权限更改。如果要想允许权限更改。需要打开 USB 调试的安全设置开关。
+
+![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAACbklEQVRoQ+2aMU4dMRCGZw6RC1CSSyQdLZJtKQ2REgoiRIpQkCYClCYpkgIESQFIpIlkW+IIcIC0gUNwiEFGz+hlmbG9b1nesvGW++zxfP7H4/H6IYzkwZFwQAUZmpJVkSeniFJKA8ASIi7MyfkrRPxjrT1JjZ8MLaXUDiJuzwngn2GJaNd7vyP5IoIYY94Q0fEQIKIPRGS8947zSQTRWh8CwLuBgZx479+2BTkHgBdDAgGAC+fcywoyIFWqInWN9BSONbTmFVp/AeA5o+rjKRJ2XwBYRsRXM4ZXgAg2LAPzOCDTJYQx5pSIVlrC3EI45y611osMTHuQUPUiYpiVooerg7TWRwDAlhSM0TuI+BsD0x4kGCuFSRVzSqkfiLiWmY17EALMbCAlMCmI6IwxZo+INgQYEYKBuW5da00PKikjhNNiiPGm01rrbwDwofGehQjjNcv1SZgddALhlJEgwgJFxDNr7acmjFLqCyJuTd6LEGFttpmkYC91Hrk3s1GZFERMmUT01Xv/sQljjPlMRMsxO6WULwnb2D8FEs4j680wScjO5f3vzrlNJszESWq2LYXJgTzjZm56MCHf3zVBxH1r7ftU1splxxKYHEgoUUpTo+grEf303rPH5hxENJqDKQEJtko2q9zGeeycWy3JhpKhWT8+NM/sufIhBwKI+Mta+7pkfxKMtd8Qtdbcx4dUQZcFCQ2I6DcAnLUpf6YMPxhIDDOuxC4C6djoQUE6+tKpewWZ1wlRkq0qUhXptKTlzv93aI3jWmE0Fz2TeujpX73F9TaKy9CeMk8vZusfBnqZ1g5GqyIdJq+XrqNR5AahKr9CCcxGSwAAAABJRU5ErkJggg==)
+
+注意：需要登录 MIUI 账号。
+
+由于日志本身的隐私属性。有一些非原生 ROM，就算是在 root 权限的 logcat 也无法全部获取日志。比如说 Flyme。这时也需要找深藏的设置开关来解决此问题。
+
+![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAACbklEQVRoQ+2aMU4dMRCGZw6RC1CSSyQdLZJtKQ2REgoiRIpQkCYClCYpkgIESQFIpIlkW+IIcIC0gUNwiEFGz+hlmbG9b1nesvGW++zxfP7H4/H6IYzkwZFwQAUZmpJVkSeniFJKA8ASIi7MyfkrRPxjrT1JjZ8MLaXUDiJuzwngn2GJaNd7vyP5IoIYY94Q0fEQIKIPRGS8947zSQTRWh8CwLuBgZx479+2BTkHgBdDAgGAC+fcywoyIFWqInWN9BSONbTmFVp/AeA5o+rjKRJ2XwBYRsRXM4ZXgAg2LAPzOCDTJYQx5pSIVlrC3EI45y611osMTHuQUPUiYpiVooerg7TWRwDAlhSM0TuI+BsD0x4kGCuFSRVzSqkfiLiWmY17EALMbCAlMCmI6IwxZo+INgQYEYKBuW5da00PKikjhNNiiPGm01rrbwDwofGehQjjNcv1SZgddALhlJEgwgJFxDNr7acmjFLqCyJuTd6LEGFttpmkYC91Hrk3s1GZFERMmUT01Xv/sQljjPlMRMsxO6WULwnb2D8FEs4j680wScjO5f3vzrlNJszESWq2LYXJgTzjZm56MCHf3zVBxH1r7ftU1splxxKYHEgoUUpTo+grEf303rPH5hxENJqDKQEJtko2q9zGeeycWy3JhpKhWT8+NM/sufIhBwKI+Mta+7pkfxKMtd8Qtdbcx4dUQZcFCQ2I6DcAnLUpf6YMPxhIDDOuxC4C6djoQUE6+tKpewWZ1wlRkq0qUhXptKTlzv93aI3jWmE0Fz2TeujpX73F9TaKy9CeMk8vZusfBnqZ1g5GqyIdJq+XrqNR5AahKr9CCcxGSwAAAABJRU5ErkJggg==)
+
+（同样是点击系统版本打开开发者模式）
+
+![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAACbklEQVRoQ+2aMU4dMRCGZw6RC1CSSyQdLZJtKQ2REgoiRIpQkCYClCYpkgIESQFIpIlkW+IIcIC0gUNwiEFGz+hlmbG9b1nesvGW++zxfP7H4/H6IYzkwZFwQAUZmpJVkSeniFJKA8ASIi7MyfkrRPxjrT1JjZ8MLaXUDiJuzwngn2GJaNd7vyP5IoIYY94Q0fEQIKIPRGS8947zSQTRWh8CwLuBgZx479+2BTkHgBdDAgGAC+fcywoyIFWqInWN9BSONbTmFVp/AeA5o+rjKRJ2XwBYRsRXM4ZXgAg2LAPzOCDTJYQx5pSIVlrC3EI45y611osMTHuQUPUiYpiVooerg7TWRwDAlhSM0TuI+BsD0x4kGCuFSRVzSqkfiLiWmY17EALMbCAlMCmI6IwxZo+INgQYEYKBuW5da00PKikjhNNiiPGm01rrbwDwofGehQjjNcv1SZgddALhlJEgwgJFxDNr7acmjFLqCyJuTd6LEGFttpmkYC91Hrk3s1GZFERMmUT01Xv/sQljjPlMRMsxO6WULwnb2D8FEs4j680wScjO5f3vzrlNJszESWq2LYXJgTzjZm56MCHf3zVBxH1r7ftU1splxxKYHEgoUUpTo+grEf303rPH5hxENJqDKQEJtko2q9zGeeycWy3JhpKhWT8+NM/sufIhBwKI+Mta+7pkfxKMtd8Qtdbcx4dUQZcFCQ2I6DcAnLUpf6YMPxhIDDOuxC4C6djoQUE6+tKpewWZ1wlRkq0qUhXptKTlzv93aI3jWmE0Fz2TeujpX73F9TaKy9CeMk8vZusfBnqZ1g5GqyIdJq+XrqNR5AahKr9CCcxGSwAAAABJRU5ErkJggg==)
+
+（设置 -- 辅助功能 -- 开发者选项 -- 性能优化 -- 高级日志输出 -- 全部允许）
+
+不同的 xxOS，XXUI 有不同的方法，请大家自行查找。
+
+**五、总结**
+
+总的来说，这篇文章，也就是围绕着 “Android 日志” 这个主题讲了一些东西。不过个人感觉最好的部分还是在 logcat 的详细介绍中。（毕竟这部分我是做得最辛苦的，网上说的太简单了，每一条命令都是我测试过的。当然，这文章的所有做法我都严格测试过以证明其有效性）当然，这篇文章对于普罗大众来说最大的用处就是知道 Android 中有日志这个东西，并且能够查看，导出并使用它。日志中，我认为，尽管只是对于爱好玩机的普罗大众，也蕴含着丰富的财富。通过查看日志，可以了解到 Android 系统中的许多奥秘，这种好奇心被满足的兴奋感绝不亚于小时候拆开机械手表查看其中的齿轮运转所感受到的心情。总之，お楽しみ下さい（请尽情享【shi】受【jian】吧）！谢谢大家！
+
+本文用于传递优惠信息，节省甄选时间，结果仅供参考。
+
+【广告】
