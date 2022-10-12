@@ -1,14 +1,3 @@
-:root {
-    --accent-color-light: #2f56b0;
-    --accent-color-dark: #5e8dec;
-    --accent-color-light-hover: #457dfb;
-    --accent-color-dark-hover: #8eabe6;
-    --tertiary-color-light: #434343;
-    --tertiary-color-dark: rgb(80, 80, 80);
-}
-
-/* Here goes your custom CSS… */
-
 /* <style> */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap');
